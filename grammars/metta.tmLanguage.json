@@ -1,0 +1,96 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "MeTTa",
+  "scopeName": "source.metta",
+  "patterns": [
+    {
+      "name": "comment.line.semicolon.metta",
+      "match": ";[^\n\r]*",
+      "comment": "Line comment starting with semicolon"
+    },
+    {
+      "name": "string.quoted.double.metta",
+      "begin": "\"",
+      "end": "\"",
+      "patterns": [
+        {
+          "name": "constant.character.escape.metta",
+          "match": "\\\\."
+        }
+      ]
+    },
+    {
+      "name": "constant.numeric.metta",
+      "match": "(?<=[()\\s]|^)(-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)(?=[()\\s]|$)",
+      "comment": "Integer and floating-point numbers"
+    },
+    {
+      "name": "variable.other.metta",
+      "match": "\\$[^()\\s\";]*",
+      "comment": "Variables prefixed with $"
+    },
+    {
+      "name": "keyword.operator.evaluation.metta",
+      "match": "(?<=[\\s(]|^)!(?=[\\s(])",
+      "comment": "Evaluation operator"
+    },
+    {
+      "name": "keyword.operator.definition.metta",
+      "match": "(?<=[\\s(])=(?=[\\s()])",
+      "comment": "Equality / function definition operator"
+    },
+    {
+      "name": "keyword.operator.type-annotation.metta",
+      "match": "(?<=[\\s(]):(?=[\\s()])",
+      "comment": "Type annotation operator"
+    },
+    {
+      "name": "keyword.operator.arrow.metta",
+      "match": "->",
+      "comment": "Arrow type constructor"
+    },
+    {
+      "name": "keyword.control.metta",
+      "match": "(?<=[()\\s])(match|let|let\\*|if|case|import!|include|bind!|pragma!)(?=[()\\s])",
+      "comment": "Core language forms"
+    },
+    {
+      "name": "support.function.builtin.metta",
+      "match": "(?<=[()\\s])(get-type|get-metatype|collapse|superpose|assertEqual|assertEqualToResult|add-atom|remove-atom|get-atoms|new-space|car-atom|cdr-atom|cons-atom|nop|empty|Error|trace!|println!)(?=[()\\s])",
+      "comment": "Built-in functions and operations"
+    },
+    {
+      "name": "support.function.arithmetic.metta",
+      "match": "(?<=[()\\s])(\\+|-|\\*|/|%|<|>|<=|>=|==)(?=[()\\s])",
+      "comment": "Arithmetic and comparison operators"
+    },
+    {
+      "name": "support.type.builtin.metta",
+      "match": "(?<=[()\\s])(Type|Atom|Symbol|Expression|Variable|Grounded|Number|Bool|String|%Undefined%)(?=[()\\s])",
+      "comment": "Built-in metatypes and types"
+    },
+    {
+      "name": "constant.language.boolean.metta",
+      "match": "(?<=[()\\s])(True|False)(?=[()\\s])",
+      "comment": "Boolean literals (case-sensitive)"
+    },
+    {
+      "name": "variable.language.self.metta",
+      "match": "&self|&space",
+      "comment": "Self-referencing space atoms"
+    },
+    {
+      "name": "punctuation.definition.list.begin.metta",
+      "match": "\\("
+    },
+    {
+      "name": "punctuation.definition.list.end.metta",
+      "match": "\\)"
+    },
+    {
+      "name": "entity.name.function.metta",
+      "match": "(?<=\\()[a-zA-Z_][a-zA-Z0-9_!?-]*",
+      "comment": "Symbol in function position (first element of an expression)"
+    }
+  ]
+}

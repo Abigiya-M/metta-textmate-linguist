@@ -1,0 +1,17 @@
+{
+  "name": "metta-textmate-linguist",
+  "version": "1.0.0",
+  "description": "TextMate grammar for the MeTTa programming language",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Abigiya-M/metta-textmate-linguist.git"
+  },
+  "license": "MIT",
+  "keywords": [
+    "metta",
+    "textmate",
+    "grammar",
+    "syntax-highlighting",
+    "linguist"
+  ]
+}
