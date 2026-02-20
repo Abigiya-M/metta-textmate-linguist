@@ -2,16 +2,64 @@
   "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
   "name": "MeTTa",
   "scopeName": "source.metta",
+  "fileTypes": ["metta"],
   "patterns": [
     {
+      "include": "#comment"
+    },
+    {
+      "include": "#string"
+    },
+    {
+      "include": "#number"
+    },
+    {
+      "include": "#variable"
+    },
+    {
+      "include": "#space-atom"
+    },
+    {
+      "include": "#operator"
+    },
+    {
+      "include": "#keyword"
+    },
+    {
+      "include": "#builtin-function"
+    },
+    {
+      "include": "#arithmetic"
+    },
+    {
+      "include": "#builtin-type"
+    },
+    {
+      "include": "#boolean"
+    },
+    {
+      "include": "#punctuation"
+    },
+    {
+      "include": "#function-call"
+    }
+  ],
+  "repository": {
+    "comment": {
       "name": "comment.line.semicolon.metta",
       "match": ";[^\n\r]*",
       "comment": "Line comment starting with semicolon"
     },
-    {
+    "string": {
       "name": "string.quoted.double.metta",
       "begin": "\"",
       "end": "\"",
+      "beginCaptures": {
+        "0": { "name": "punctuation.definition.string.begin.metta" }
+      },
+      "endCaptures": {
+        "0": { "name": "punctuation.definition.string.end.metta" }
+      },
       "patterns": [
         {
           "name": "constant.character.escape.metta",
@@ -19,78 +67,86 @@
         }
       ]
     },
-    {
+    "number": {
       "name": "constant.numeric.metta",
-      "match": "(?<=[()\\s]|^)(-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?)(?=[()\\s]|$)",
+      "match": "(?<=[()\\s]|^)-?(?:0|[1-9]\\d*)(?:\\.\\d+)?(?:[eE][+-]?\\d+)?(?=[()\\s]|$)",
       "comment": "Integer and floating-point numbers"
     },
-    {
+    "variable": {
       "name": "variable.other.metta",
-      "match": "\\$[^()\\s\";]*",
+      "match": "\\$[^()\\s\";]+",
       "comment": "Variables prefixed with $"
     },
-    {
-      "name": "keyword.operator.evaluation.metta",
-      "match": "(?<=[\\s(]|^)!(?=[\\s(])",
-      "comment": "Evaluation operator"
+    "space-atom": {
+      "name": "variable.language.self.metta",
+      "match": "&[a-zA-Z_][a-zA-Z0-9_-]*",
+      "comment": "Space atoms like &self, &space, &kb"
     },
-    {
-      "name": "keyword.operator.definition.metta",
-      "match": "(?<=[\\s(])=(?=[\\s()])",
-      "comment": "Equality / function definition operator"
+    "operator": {
+      "patterns": [
+        {
+          "name": "keyword.operator.evaluation.metta",
+          "match": "(?<=[\\s(]|^)!(?=[\\s(])",
+          "comment": "Evaluation operator"
+        },
+        {
+          "name": "keyword.operator.definition.metta",
+          "match": "(?<=[\\s(])=(?=[\\s()])",
+          "comment": "Equality / function definition operator"
+        },
+        {
+          "name": "keyword.operator.type-annotation.metta",
+          "match": "(?<=[\\s(]):(?=[\\s()])",
+          "comment": "Type annotation operator"
+        },
+        {
+          "name": "keyword.operator.arrow.metta",
+          "match": "->",
+          "comment": "Arrow type constructor"
+        }
+      ]
     },
-    {
-      "name": "keyword.operator.type-annotation.metta",
-      "match": "(?<=[\\s(]):(?=[\\s()])",
-      "comment": "Type annotation operator"
-    },
-    {
-      "name": "keyword.operator.arrow.metta",
-      "match": "->",
-      "comment": "Arrow type constructor"
-    },
-    {
+    "keyword": {
       "name": "keyword.control.metta",
-      "match": "(?<=[()\\s])(match|let|let\\*|if|case|import!|include|bind!|pragma!)(?=[()\\s])",
+      "match": "(?<=[()\\s])(match|let\\*?|if|case|import!|include|bind!|pragma!|function|return)(?=[()\\s])",
       "comment": "Core language forms"
     },
-    {
+    "builtin-function": {
       "name": "support.function.builtin.metta",
-      "match": "(?<=[()\\s])(get-type|get-metatype|collapse|superpose|assertEqual|assertEqualToResult|add-atom|remove-atom|get-atoms|new-space|car-atom|cdr-atom|cons-atom|nop|empty|Error|trace!|println!)(?=[()\\s])",
+      "match": "(?<=[()\\s])(get-type|get-metatype|collapse|superpose|assertEqual|assertEqualToResult|add-atom|remove-atom|get-atoms|new-space|car-atom|cdr-atom|cons-atom|nop|empty|Error|trace!|println!|sealed|apply|chain|unify)(?=[()\\s])",
       "comment": "Built-in functions and operations"
     },
-    {
+    "arithmetic": {
       "name": "support.function.arithmetic.metta",
       "match": "(?<=[()\\s])(\\+|-|\\*|/|%|<|>|<=|>=|==)(?=[()\\s])",
       "comment": "Arithmetic and comparison operators"
     },
-    {
+    "builtin-type": {
       "name": "support.type.builtin.metta",
       "match": "(?<=[()\\s])(Type|Atom|Symbol|Expression|Variable|Grounded|Number|Bool|String|%Undefined%)(?=[()\\s])",
       "comment": "Built-in metatypes and types"
     },
-    {
+    "boolean": {
       "name": "constant.language.boolean.metta",
       "match": "(?<=[()\\s])(True|False)(?=[()\\s])",
       "comment": "Boolean literals (case-sensitive)"
     },
-    {
-      "name": "variable.language.self.metta",
-      "match": "&self|&space",
-      "comment": "Self-referencing space atoms"
+    "punctuation": {
+      "patterns": [
+        {
+          "name": "punctuation.definition.list.begin.metta",
+          "match": "\\("
+        },
+        {
+          "name": "punctuation.definition.list.end.metta",
+          "match": "\\)"
+        }
+      ]
     },
-    {
-      "name": "punctuation.definition.list.begin.metta",
-      "match": "\\("
-    },
-    {
-      "name": "punctuation.definition.list.end.metta",
-      "match": "\\)"
-    },
-    {
+    "function-call": {
       "name": "entity.name.function.metta",
       "match": "(?<=\\()[a-zA-Z_][a-zA-Z0-9_!?-]*",
       "comment": "Symbol in function position (first element of an expression)"
     }
-  ]
+  }
 }

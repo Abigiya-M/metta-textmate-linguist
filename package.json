@@ -13,5 +13,22 @@
     "grammar",
     "syntax-highlighting",
     "linguist"
-  ]
+  ],
+  "contributes": {
+    "languages": [
+      {
+        "id": "metta",
+        "aliases": ["MeTTa", "metta"],
+        "extensions": [".metta"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "metta",
+        "scopeName": "source.metta",
+        "path": "./grammars/metta.tmLanguage.json"
+      }
+    ]
+  }
 }
